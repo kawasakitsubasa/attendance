@@ -16,3 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+// 管理者ログイン
+Route::get('/admin/login', [App\Http\Controllers\Admin\AuthController::class, 'showLoginForm']);
+Route::post('/admin/login', [App\Http\Controllers\Admin\AuthController::class, 'login']);
