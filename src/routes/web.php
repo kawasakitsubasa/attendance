@@ -20,3 +20,5 @@ Route::get('/', function () {
 // 管理者ログイン
 Route::get('/admin/login', [App\Http\Controllers\Admin\AuthController::class, 'showLoginForm']);
 Route::post('/admin/login', [App\Http\Controllers\Admin\AuthController::class, 'login']);
+// 勤怠一覧
+Route::get('/admin/attendance/list', [App\Http\Controllers\Admin\AttendanceController::class, 'index']);
