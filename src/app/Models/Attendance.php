@@ -32,4 +32,8 @@ class Attendance extends Model
         if (!$this->clock_in || !$this->clock_out) return null;
         return $this->clock_in->diff($this->clock_out)->format('%H:%I');
     }
+    public function breakTimes()
+    {
+        return $this->hasMany(BreakTime::class);
+    }
 }

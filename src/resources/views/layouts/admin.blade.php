@@ -12,14 +12,14 @@
 <header>
     <img src="{{ asset('image/logo.png') }}" alt="COACHTECH">
     <nav>
-        <a href="/admin/attendance">勤怠一覧</a>
-        <a href="/admin/users">スタッフ一覧</a>
-        <a href="/admin/requests">申請一覧</a>
-        <form method="POST" action="/admin/logout">
-            @csrf
-            <button type="submit">ログアウト</button>
-        </form>
-    </nav>
+         <a href="/admin/attendance/list">勤怠一覧</a>
+         <a href="/admin/staff/list">スタッフ一覧</a>
+         <a href="/stamp_correction_request/list">申請一覧</a>
+         <form method="POST" action="/admin/logout">
+             @csrf
+             <button type="submit">ログアウト</button>
+         </form>
+   </nav>
 </header>
 
 <main>

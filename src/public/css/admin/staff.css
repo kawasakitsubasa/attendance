@@ -1,0 +1,53 @@
+.page-title {
+    margin-bottom: 32px;
+    border-left: 4px solid #000;
+    padding-left: 12px;
+}
+
+.page-title h2 {
+    font-size: 20px;
+}
+
+.table-wrap {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+thead tr {
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    padding: 16px;
+    color: #555;
+    font-weight: normal;
+    text-align: center;
+}
+
+td {
+    padding: 16px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+    color: #555;
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+td a {
+    color: #000;
+    text-decoration: none;
+}
+
+td a:hover {
+    opacity: 0.6;
+}
