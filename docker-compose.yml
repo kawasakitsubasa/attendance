@@ -15,7 +15,9 @@ services:
     build: ./docker/php
     volumes:
       - ./src:/var/www/
-    user: "1000:1000"
+    command: >
+      bash -c "chmod -R 777 /var/www/storage /var/www/bootstrap/cache
+      && php-fpm"
 
   mysql:
     image: mysql:8.0.26
@@ -41,3 +43,9 @@ services:
       - mysql
     ports:
       - 8080:80
+
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - "8025:8025"
+      - "1025:1025"
