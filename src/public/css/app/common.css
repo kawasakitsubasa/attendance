@@ -1,0 +1,60 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: sans-serif;
+    background: #fff;
+}
+
+header {
+    background: #000;
+    padding: 16px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+header img {
+    height: 28px;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 15px;
+}
+
+nav a:hover {
+    opacity: 0.7;
+}
+
+nav form {
+    margin: 0;
+}
+
+nav button {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+nav button:hover {
+    opacity: 0.7;
+}
+
+main {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 48px 24px;
+}

@@ -1,0 +1,41 @@
+.verify-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+    margin-top: 80px;
+}
+
+.message {
+    text-align: center;
+    font-size: 15px;
+    line-height: 2;
+}
+
+.btn-verify {
+    display: inline-block;
+    background: #e0e0e0;
+    color: #000;
+    padding: 16px 48px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.btn-verify:hover {
+    opacity: 0.8;
+}
+
+.resend-link {
+    background: none;
+    border: none;
+    color: #0066cc;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.resend-link:hover {
+    opacity: 0.7;
+}
