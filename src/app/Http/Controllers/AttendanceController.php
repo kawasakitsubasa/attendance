@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Attendance;
 use Carbon\Carbon;
+use App\Models\AttendanceCorrectRequest;
 
 class AttendanceController extends Controller
 {
@@ -75,12 +76,36 @@ class AttendanceController extends Controller
 
     public function list(Request $request)
     {
-        // 後で実装
+    $user = Auth::user();
+
+    $month = $request->month
+        ? Carbon::parse($request->month . '-01')
+        : Carbon::today()->startOfMonth();
+
+        $days = collect();
+        $start = $month->copy()->startOfMonth();
+        $end   = $month->copy()->endOfMonth();
+        for ($d = $start->copy(); $d->lte($end); $d->addDay()) {
+          $days->push($d->copy());
+      }
+
+         $attendances = Attendance::where('user_id', $user->id)
+          ->whereYear('date', $month->year)
+          ->whereMonth('date', $month->month)
+          ->get();
+
+        return view('attendance.list', compact('month', 'days', 'attendances'));
     }
 
     public function detail($id)
     {
-        // 後で実装
+        $attendance = Attendance::with(['user', 'breakTimes'])->findOrFail($id);
+
+        $isPending = AttendanceCorrectRequest::where('attendance_id', $id)
+           ->where('is_approved', false)
+           ->exists();
+
+          return view('attendance.detail', compact('attendance', 'isPending'));
     }
 
     public function update(Request $request, $id)
