@@ -13,13 +13,14 @@
     <img src="{{ asset('image/logo.png') }}" alt="COACHTECH">
     @if(Auth::check() && Auth::user()->hasVerifiedEmail())
 <nav>
-    @if(request()->is('attendance') && isset($status) && $status === '退勤済')
+    @if(isset($status) && $status === '退勤済')
         <a href="/attendance/list">今月の出勤一覧</a>
+        <a href="/stamp_correction_request/list">申請一覧</a>
     @else
         <a href="/attendance">勤怠</a>
         <a href="/attendance/list">勤怠一覧</a>
+        <a href="/stamp_correction_request/list">申請</a>
     @endif
-    <a href="/stamp_correction_request/list">申請一覧</a>
     <form method="POST" action="/logout">
         @csrf
         <button type="submit">ログアウト</button>

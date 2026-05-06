@@ -1,0 +1,111 @@
+main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 48px 24px;
+}
+
+.page-title {
+    margin-bottom: 24px;
+    border-left: 4px solid #000;
+    padding-left: 12px;
+}
+
+.page-title h2 {
+    font-size: 20px;
+}
+
+.detail-wrap {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.error-box {
+    padding: 12px 24px;
+    color: red;
+    font-size: 13px;
+    border-bottom: 1px solid #eee;
+}
+
+.pending-msg {
+    padding: 12px 32px;
+    color: red;
+    font-size: 14px;
+    border-bottom: 1px solid #eee;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    padding: 24px 32px;
+    border-bottom: 1px solid #eee;
+    gap: 80px;
+}
+
+.label {
+    width: 100px;
+    font-size: 14px;
+    color: #555;
+    flex-shrink: 0;
+}
+
+.value {
+    flex: 1;
+    font-size: 15px;
+}
+
+.date-value {
+    display: flex;
+    gap: 48px;
+}
+
+.time-fields {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.time-fields input {
+    width: 80px;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.tilde {
+    font-size: 16px;
+    color: #555;
+}
+
+textarea {
+    width: 360px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    resize: vertical;
+}
+
+.btn-wrap {
+    display: flex;
+    justify-content: flex-end;
+    padding: 24px 32px;
+}
+
+.btn {
+    background: #000;
+    color: #fff;
+    border: none;
+    padding: 14px 48px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    opacity: 0.8;
+}

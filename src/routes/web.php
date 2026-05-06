@@ -21,24 +21,28 @@ Route::post('/email/verification-notification', function (Illuminate\Http\Reques
     $request->user()->sendEmailVerificationNotification();
     return back()->with('message', '認証メールを再送しました');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
     return redirect('/attendance');
 })->middleware(['auth', 'signed'])->name('verification.verify');
 
-// 勤怠
-Route::get('/attendance', [App\Http\Controllers\AttendanceController::class, 'index']);
-Route::post('/attendance', [App\Http\Controllers\AttendanceController::class, 'store']);
+// ログイン必須のルート
+Route::middleware(['auth', 'verified'])->group(function () {
+    // 勤怠
+    Route::get('/attendance', [App\Http\Controllers\AttendanceController::class, 'index']);
+    Route::post('/attendance', [App\Http\Controllers\AttendanceController::class, 'store']);
 
-// 勤怠一覧
-Route::get('/attendance/list', [App\Http\Controllers\AttendanceController::class, 'list']);
+    // 勤怠一覧
+    Route::get('/attendance/list', [App\Http\Controllers\AttendanceController::class, 'list']);
 
-// 勤怠詳細
-Route::get('/attendance/detail/{id}', [App\Http\Controllers\AttendanceController::class, 'detail']);
-Route::post('/attendance/detail/{id}', [App\Http\Controllers\AttendanceController::class, 'update']);
+    // 勤怠詳細
+    Route::get('/attendance/detail/{id}', [App\Http\Controllers\AttendanceController::class, 'detail']);
+    Route::post('/attendance/detail/{id}', [App\Http\Controllers\AttendanceController::class, 'update']);
 
-// 申請一覧
-Route::get('/stamp_correction_request/list', [App\Http\Controllers\StampCorrectionRequestController::class, 'list']);
+    // 申請一覧（一般ユーザー）
+    Route::get('/stamp_correction_request/list', [App\Http\Controllers\StampCorrectionRequestController::class, 'list']);
+});
 
 
 // ===== 管理者 =====
@@ -51,7 +55,7 @@ Route::post('/admin/logout', [App\Http\Controllers\Admin\AuthController::class, 
 // 勤怠一覧
 Route::get('/admin/attendance/list', [App\Http\Controllers\Admin\AttendanceController::class, 'index']);
 
-// スタッフ別勤怠一覧（detailより先に書く！順番大事）
+// スタッフ別勤怠一覧
 Route::get('/admin/attendance/staff/{id}', [App\Http\Controllers\Admin\AttendanceController::class, 'staff']);
 
 // 勤怠詳細
@@ -61,7 +65,7 @@ Route::post('/admin/attendance/{id}', [App\Http\Controllers\Admin\AttendanceCont
 // スタッフ一覧
 Route::get('/admin/staff/list', [App\Http\Controllers\Admin\StaffController::class, 'index']);
 
-// 申請一覧・承認
-Route::get('/stamp_correction_request/list', [App\Http\Controllers\Admin\StampCorrectionRequestController::class, 'list']);
+// 申請一覧・承認（管理者）
+Route::get('/admin/stamp_correction_request/list', [App\Http\Controllers\Admin\StampCorrectionRequestController::class, 'list']);
 Route::get('/stamp_correction_request/approve/{attendance_correct_request_id}', [App\Http\Controllers\Admin\StampCorrectionRequestController::class, 'approve']);
 Route::post('/stamp_correction_request/approve/{attendance_correct_request_id}', [App\Http\Controllers\Admin\StampCorrectionRequestController::class, 'store']);
