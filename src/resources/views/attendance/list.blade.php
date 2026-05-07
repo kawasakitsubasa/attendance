@@ -30,7 +30,9 @@
             <tbody>
                 @foreach($days as $day)
                 @php
-                    $attendance = $attendances->firstWhere('date', $day->format('Y-m-d'));
+                    $attendance = $attendances->first(function($a) use ($day) {
+                       return \Carbon\Carbon::parse($a->date)->format('Y-m-d') === $day->format('Y-m-d');
+                    });
                     $youbi = ['日','月','火','水','木','金','土'][$day->dayOfWeek];
                 @endphp
                 <tr>

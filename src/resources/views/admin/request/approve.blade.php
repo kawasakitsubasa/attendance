@@ -36,27 +36,9 @@
             </div>
         </div>
 
-        {{-- 休憩（既存分） --}}
-        @foreach($correctionRequest->breakRequests as $i => $break)
-        <div class="row">
-            <div class="label">休憩{{ $i > 0 ? $i + 1 : '' }}</div>
-            <div class="value time-fields">
-                <span>{{ $break->start_time ? $break->start_time->format('H:i') : '' }}</span>
-                <span class="tilde">〜</span>
-                <span>{{ $break->end_time ? $break->end_time->format('H:i') : '' }}</span>
-            </div>
-        </div>
-        @endforeach
-
-        {{-- 休憩2（空欄） --}}
-        @if($correctionRequest->breakRequests->count() === 0)
+        {{-- 休憩 --}}
         <div class="row">
             <div class="label">休憩</div>
-            <div class="value"></div>
-        </div>
-        @endif
-        <div class="row">
-            <div class="label">休憩{{ $correctionRequest->breakRequests->count() + 1 }}</div>
             <div class="value"></div>
         </div>
 
