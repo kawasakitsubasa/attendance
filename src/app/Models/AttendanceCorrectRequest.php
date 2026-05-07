@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class AttendanceCorrectRequest extends Model
 {
     protected $fillable = [
-      'attendance_id', 'user_id', 'target_date',
-      'reason', 'is_approved', 'clock_in', 'clock_out'
+        'attendance_id', 'user_id', 'target_date',
+        'reason', 'is_approved', 'clock_in', 'clock_out'
     ];
 
     protected $casts = [
@@ -24,10 +24,5 @@ class AttendanceCorrectRequest extends Model
     public function attendance()
     {
         return $this->belongsTo(Attendance::class);
-    }
-
-    public function breakRequests()
-    {
-        return $this->hasMany(BreakCorrectRequest::class);
     }
 }

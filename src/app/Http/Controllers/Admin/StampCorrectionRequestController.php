@@ -22,10 +22,10 @@ class StampCorrectionRequestController extends Controller
 
     public function approve($id)
     {
-         $correctionRequest = AttendanceCorrectRequest::with(['user', 'breakRequests'])
+         $correctionRequest = AttendanceCorrectRequest::with(['user', 'attendance'])
              ->findOrFail($id);
 
-        return view('admin.request.approve', compact('correctionRequest'));
+         return view('admin.request.approve', compact('correctionRequest'));
     }
 
     public function store(Request $request, $id)

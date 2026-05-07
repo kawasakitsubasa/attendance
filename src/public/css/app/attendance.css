@@ -71,3 +71,14 @@ main {
     color: #000;
     border: 1.5px solid #ccc;
 }
+
+.pending-wrap {
+    display: flex;
+    justify-content: flex-end;
+    padding: 24px 32px;
+}
+
+.pending-msg {
+    color: red;
+    font-size: 14px;
+}

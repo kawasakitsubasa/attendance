@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Attendance;
 use Carbon\Carbon;
 use App\Models\AttendanceCorrectRequest;
+use App\Http\Requests\AttendanceDetailRequest;
 
 class AttendanceController extends Controller
 {
@@ -76,23 +77,23 @@ class AttendanceController extends Controller
 
     public function list(Request $request)
     {
-    $user = Auth::user();
+       $user = Auth::user();
 
-    $month = $request->month
-        ? Carbon::parse($request->month . '-01')
-        : Carbon::today()->startOfMonth();
+       $month = $request->month
+          ? Carbon::parse($request->month . '-01')
+          : Carbon::today()->startOfMonth();
 
-        $days = collect();
-        $start = $month->copy()->startOfMonth();
-        $end   = $month->copy()->endOfMonth();
-        for ($d = $start->copy(); $d->lte($end); $d->addDay()) {
+       $days = collect();
+       $start = $month->copy()->startOfMonth();
+       $end   = $month->copy()->endOfMonth();
+       for ($d = $start->copy(); $d->lte($end); $d->addDay()) {
           $days->push($d->copy());
-      }
+       }
 
-         $attendances = Attendance::where('user_id', $user->id)
-          ->whereYear('date', $month->year)
-          ->whereMonth('date', $month->month)
-          ->get();
+       $attendances = Attendance::where('user_id', $user->id)
+           ->whereYear('date', $month->year)
+           ->whereMonth('date', $month->month)
+           ->get();
 
         return view('attendance.list', compact('month', 'days', 'attendances'));
     }
@@ -108,8 +109,38 @@ class AttendanceController extends Controller
           return view('attendance.detail', compact('attendance', 'isPending'));
     }
 
-    public function update(Request $request, $id)
+    public function update(AttendanceDetailRequest $request, $id)
     {
-        // 後で実装
+    $attendance = Attendance::findOrFail($id);
+
+    $attendance->update([
+        'clock_in'  => $request->clock_in ? Carbon::parse($attendance->date->format('Y-m-d') . ' ' . $request->clock_in) : null,
+        'clock_out' => $request->clock_out ? Carbon::parse($attendance->date->format('Y-m-d') . ' ' . $request->clock_out) : null,
+        'note'      => $request->note,
+    ]);
+
+    if ($request->breaks) {
+        $attendance->breakTimes()->delete();
+        foreach ($request->breaks as $break) {
+            if (!empty($break['start']) || !empty($break['end'])) {
+                $attendance->breakTimes()->create([
+                    'start_time' => !empty($break['start']) ? Carbon::parse($attendance->date->format('Y-m-d') . ' ' . $break['start']) : null,
+                    'end_time'   => !empty($break['end']) ? Carbon::parse($attendance->date->format('Y-m-d') . ' ' . $break['end']) : null,
+                ]);
+            }
+        }
     }
+
+    AttendanceCorrectRequest::create([
+        'attendance_id' => $attendance->id,
+        'user_id'       => Auth::id(),
+        'target_date'   => $attendance->date,
+        'reason'        => $request->note ?? '',
+        'is_approved'   => false,
+        'clock_in'      => $request->clock_in,
+        'clock_out'     => $request->clock_out,
+    ]);
+
+    return redirect('/attendance/list');
+   }
 }

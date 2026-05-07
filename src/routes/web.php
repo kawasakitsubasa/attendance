@@ -29,18 +29,11 @@ Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $requ
 
 // ログイン必須のルート
 Route::middleware(['auth', 'verified'])->group(function () {
-    // 勤怠
     Route::get('/attendance', [App\Http\Controllers\AttendanceController::class, 'index']);
     Route::post('/attendance', [App\Http\Controllers\AttendanceController::class, 'store']);
-
-    // 勤怠一覧
     Route::get('/attendance/list', [App\Http\Controllers\AttendanceController::class, 'list']);
-
-    // 勤怠詳細
     Route::get('/attendance/detail/{id}', [App\Http\Controllers\AttendanceController::class, 'detail']);
     Route::post('/attendance/detail/{id}', [App\Http\Controllers\AttendanceController::class, 'update']);
-
-    // 申請一覧（一般ユーザー）
     Route::get('/stamp_correction_request/list', [App\Http\Controllers\StampCorrectionRequestController::class, 'list']);
 });
 
@@ -57,6 +50,9 @@ Route::get('/admin/attendance/list', [App\Http\Controllers\Admin\AttendanceContr
 
 // スタッフ別勤怠一覧
 Route::get('/admin/attendance/staff/{id}', [App\Http\Controllers\Admin\AttendanceController::class, 'staff']);
+
+// CSV出力
+Route::get('/admin/attendance/staff/{id}/csv', [App\Http\Controllers\Admin\AttendanceController::class, 'csv']);
 
 // 勤怠詳細
 Route::get('/admin/attendance/{id}', [App\Http\Controllers\Admin\AttendanceController::class, 'detail']);
