@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\AdminLoginRequest;
 
 class AuthController extends Controller
 {
@@ -15,7 +16,7 @@ class AuthController extends Controller
     }
 
     // ログインボタンを押した時の処理
-    public function login(Request $request)
+    public function login(AdminLoginRequest $request)
     {
         $credentials = $request->validate([
             'email'    => ['required', 'email'],
