@@ -10,9 +10,9 @@
     </div>
 
     <div class="tabs">
-        <a href="/stamp_correction_request/list?tab=pending"
+        <a href="/admin/stamp_correction_request/list?tab=pending"
            class="tab {{ $tab === 'pending' ? 'active' : '' }}">承認待ち</a>
-        <a href="/stamp_correction_request/list?tab=approved"
+        <a href="/admin/stamp_correction_request/list?tab=approved"
            class="tab {{ $tab === 'approved' ? 'active' : '' }}">承認済み</a>
     </div>
 

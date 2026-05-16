@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 // 認証
 Route::get('/register', [App\Http\Controllers\Auth\RegisterController::class, 'showRegistrationForm']);
 Route::post('/register', [App\Http\Controllers\Auth\RegisterController::class, 'register']);
-Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm']);
+Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login']);
 Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout']);
 
@@ -41,27 +41,19 @@ Route::middleware(['auth', 'verified'])->group(function () {
 // ===== 管理者 =====
 
 // 認証
-Route::get('/admin/login', [App\Http\Controllers\Admin\AuthController::class, 'showLoginForm']);
+Route::get('/admin/login', [App\Http\Controllers\Admin\AuthController::class, 'showLoginForm'])->name('admin.login');
 Route::post('/admin/login', [App\Http\Controllers\Admin\AuthController::class, 'login']);
 Route::post('/admin/logout', [App\Http\Controllers\Admin\AuthController::class, 'logout']);
 
-// 勤怠一覧
-Route::get('/admin/attendance/list', [App\Http\Controllers\Admin\AttendanceController::class, 'index']);
-
-// スタッフ別勤怠一覧
-Route::get('/admin/attendance/staff/{id}', [App\Http\Controllers\Admin\AttendanceController::class, 'staff']);
-
-// CSV出力
-Route::get('/admin/attendance/staff/{id}/csv', [App\Http\Controllers\Admin\AttendanceController::class, 'csv']);
-
-// 勤怠詳細
-Route::get('/admin/attendance/{id}', [App\Http\Controllers\Admin\AttendanceController::class, 'detail']);
-Route::post('/admin/attendance/{id}', [App\Http\Controllers\Admin\AttendanceController::class, 'update']);
-
-// スタッフ一覧
-Route::get('/admin/staff/list', [App\Http\Controllers\Admin\StaffController::class, 'index']);
-
-// 申請一覧・承認（管理者）
-Route::get('/admin/stamp_correction_request/list', [App\Http\Controllers\Admin\StampCorrectionRequestController::class, 'list']);
-Route::get('/stamp_correction_request/approve/{attendance_correct_request_id}', [App\Http\Controllers\Admin\StampCorrectionRequestController::class, 'approve']);
-Route::post('/stamp_correction_request/approve/{attendance_correct_request_id}', [App\Http\Controllers\Admin\StampCorrectionRequestController::class, 'store']);
+// 管理者ログイン必須ルート
+Route::middleware(['auth:admin'])->group(function () {
+    Route::get('/admin/attendance/list', [App\Http\Controllers\Admin\AttendanceController::class, 'index']);
+    Route::get('/admin/attendance/staff/{id}', [App\Http\Controllers\Admin\AttendanceController::class, 'staff']);
+    Route::get('/admin/attendance/staff/{id}/csv', [App\Http\Controllers\Admin\AttendanceController::class, 'csv']);
+    Route::get('/admin/attendance/{id}', [App\Http\Controllers\Admin\AttendanceController::class, 'detail']);
+    Route::post('/admin/attendance/{id}', [App\Http\Controllers\Admin\AttendanceController::class, 'update']);
+    Route::get('/admin/staff/list', [App\Http\Controllers\Admin\StaffController::class, 'index']);
+    Route::get('/admin/stamp_correction_request/list', [App\Http\Controllers\Admin\StampCorrectionRequestController::class, 'list']);
+    Route::get('/stamp_correction_request/approve/{attendance_correct_request_id}', [App\Http\Controllers\Admin\StampCorrectionRequestController::class, 'approve']);
+    Route::post('/stamp_correction_request/approve/{attendance_correct_request_id}', [App\Http\Controllers\Admin\StampCorrectionRequestController::class, 'store']);
+});

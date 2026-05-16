@@ -25,9 +25,9 @@ class AuthController extends Controller
 
         // adminガードでログイン試行
         if (Auth::guard('admin')->attempt($credentials)) {
-            $request->session()->regenerate();
-            return redirect('/admin/attendance');  // ログイン後の画面（後で作る）
-        }
+           $request->session()->regenerate();
+           return redirect('/admin/attendance/list'); 
+}
 
         return back()->withErrors([
             'email' => 'ログイン情報が登録されていません',
