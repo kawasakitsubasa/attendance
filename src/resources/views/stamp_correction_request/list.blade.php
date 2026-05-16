@@ -36,7 +36,7 @@
                     <td>{{ $req->target_date->format('Y/m/d') }}</td>
                     <td>{{ $req->reason }}</td>
                     <td>{{ $req->created_at->format('Y/m/d') }}</td>
-                    <td><a href="/stamp_correction_request/approve/{{ $req->id }}"><strong>詳細</strong></a></td>
+                    <td><a href="/attendance/detail/{{ $req->attendance_id }}"><strong>詳細</strong></a></td>
                 </tr>
                 @endforeach
             </tbody>
